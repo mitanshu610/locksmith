@@ -29,8 +29,8 @@ COPY ./requirements/requirements.txt .
 RUN pip3 install --upgrade pip setuptools wheel && pip3 install -r ./requirements.txt
 
 
-WORKDIR /srv/almanac
-RUN mkdir /srv/almanac/repos
+WORKDIR /srv/locksmith
+RUN mkdir /srv/locksmith/repos
 EXPOSE 8000
 
 ENTRYPOINT ["python3", "entrypoint.py"]
