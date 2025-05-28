@@ -1,32 +1,36 @@
-# Use the official Python 3.10 image from the Docker Hub
-FROM python:3.10-slim as base
+FROM ubuntu:22.04
 
-# Install Git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y --no-install-recommends \
+    wget \
+    python3-pip \
+    python3-setuptools \
+    && cd /usr/local/bin \
+    && pip3 --no-cache-dir install --upgrade pip \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    curl \
+    openssh-server \
+    git \
+    librdkafka-dev \
+    bash \
+    g++ \
+    build-essential && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create a non-root user
-RUN adduser --disabled-password --gecos '' appuser
+RUN apt-get remove --purge -y linux-libc-dev
 
-# Set the working directory in the container
-WORKDIR /app
 
-# Copy the requirements file into the container
+WORKDIR /srv/locksmith
+
 COPY ./requirements/requirements.txt .
 
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --upgrade pip setuptools wheel && pip3 install -r ./requirements.txt
 
-# Copy the FastAPI application code into the container
-COPY . .
 
-# Change ownership of the application files
-RUN chown -R appuser:appuser /app
-
-# Switch to the non-root user
-USER appuser
-
-# Expose the port that the FastAPI app runs on
+WORKDIR /srv/almanac
+RUN mkdir /srv/almanac/repos
 EXPOSE 8000
 
-# Command to run the FastAPI application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["python3", "entrypoint.py"]
