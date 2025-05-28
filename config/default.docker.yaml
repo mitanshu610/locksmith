@@ -1,0 +1,16 @@
+env: "docker"
+port: 8000
+host: "localhost"
+debug: true
+mode: "server"
+server_type: "public"
+postgres_fynix_locksmith_read_write: "postgresql+psycopg2://postgres:postgres@host.docker.internal:5432/locksmith"
+clerk_secret_key: "sk_test_aRZHMzYk1wWhF6DwOe9Pi7jts7zAd5ICLNHAnEimfg"
+realm: "fexz0"
+sentry_environment: "development"
+kafka_broker_list: "127.0.0.1:9092"
+
+K8S_POD_NAME: "temp"
+K8S_POD_NAMESPACE: "temp"
+K8S_NODE_NAME: "temp"
+SENTRY_DSN: ""
