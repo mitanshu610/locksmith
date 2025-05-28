@@ -34,6 +34,6 @@ WORKDIR /srv/locksmith
 RUN mkdir /srv/locksmith/repos
 EXPOSE 8000
 
-RUN alembic upgrade head
+RUN python3 startup.py --all
 
 ENTRYPOINT ["python3", "entrypoint.py"]
