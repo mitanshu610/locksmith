@@ -1,16 +1,25 @@
 # ---------- Team ----------
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 
 
 class TeamCreateSchema(BaseModel):
+    team_id: UUID = Field(..., description="Unique identifier of the created team")
     name: str = Field(..., description="Name of the team")
+    description: Optional[str] = Field(None, description="Description of the team")
     team_slug: Optional[str] = Field(None, description="Slug for the team")
     created_by: Optional[str] = Field(None, description="Clerk user ID who created the team")
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class TeamAddSchema(BaseModel):
+    name: str = Field(..., description="Name of the team")
+    description: Optional[str] = Field(None, description="Description of the team")
+    team_slug: Optional[str] = Field(None, description="Slug for the team")
+    created_by: Optional[str] = Field(None, description="Clerk user ID who created the team")
 
 
 class TeamGetSchema(TeamCreateSchema):
@@ -21,14 +30,29 @@ class TeamGetSchema(TeamCreateSchema):
 
 class TeamUpdateSchema(BaseModel):
     name: Optional[str] = Field(None, description="Updated team name")
-    team_slug: Optional[str] = Field(None, description="Updated team slug")
+    description: Optional[str] = Field(None, description="Updated team slug")
 
 
 # ---------- Team Members ----------
-class TeamMemberAddSchema(BaseModel):
+class UserRolePair(BaseModel):
     user_id: str = Field(..., description="Clerk user ID")
-    role_id: UUID = Field(..., description="Role ID assigned to the user")
-    membership_slug: Optional[str] = Field(None, description="Slug for the membership")
+    role_slug: Optional[str] = Field(None, description="Role ID assigned to the user")
+
+class TeamMemberAddSchema(BaseModel):
+    members: List[UserRolePair] = Field(..., description="List of user and role pairs to add")
+
+    model_config = ConfigDict(from_attributes=True)
+
+class MemberRoleChangeSchema(BaseModel):
+    members: List[UserRolePair] = Field(..., description="Clerk user ID")
+
+    model_config = ConfigDict(from_attributes=True)
+
+class TeamMembershipResponse(BaseModel):
+    """Schema for team membership response."""
+    team_id: UUID
+    user_id: str
+    role_id: UUID
 
     model_config = ConfigDict(from_attributes=True)
 
