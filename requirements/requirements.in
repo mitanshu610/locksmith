@@ -12,7 +12,6 @@ asyncpg==0.29.0
 structlog==24.1.0
 structlog-sentry==2.0.3
 pyyaml==6.0.1
-eventbridge@git+ssh://git@ssh.dev.azure.com/v3/GoFynd/SupplyChainGroup/fynd-event-bridge@fex-event-bridge-v2
 itsdangerous==2.2.0
 redis==5.2.0
 newrelic==9.5.0
