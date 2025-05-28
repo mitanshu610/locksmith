@@ -25,7 +25,6 @@ class LogLevel(enum.Enum):  # noqa: WPS600
 
 
 class Settings(BaseSettings):
-    CONSUMER_TYPE: str = args.consumer_type
     env: str = args.env
     port: int = args.port
     host: str = args.host
