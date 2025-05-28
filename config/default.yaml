@@ -1,17 +1,14 @@
 env: "local"
-port: 8082
+port: 8000
 host: "localhost"
 debug: true
 mode: "server"
 server_type: "public"
-locksmith_main_url: "http://localhost:8081"
 postgres_fynix_locksmith_read_write: "postgresql+psycopg2://postgres:postgres@127.0.0.1:5432/locksmith"
-consumer_type: "azure_pr_event_emitter_consumer"
 clerk_secret_key: "sk_test_aRZHMzYk1wWhF6DwOe9Pi7jts7zAd5ICLNHAnEimfg"
 realm: "fexz0"
 sentry_environment: "development"
 kafka_broker_list: "127.0.0.1:9092"
-pro_trial_expiration_time_seconds: 240
 
 K8S_POD_NAME: "temp"
 K8S_POD_NAMESPACE: "temp"
