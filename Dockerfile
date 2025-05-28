@@ -34,6 +34,7 @@ WORKDIR /srv/locksmith
 RUN mkdir /srv/locksmith/repos
 EXPOSE 8000
 
+ENV ENVIRONMENT docker
 RUN python3 startup.py --all
 
 ENTRYPOINT ["python3", "entrypoint.py"]
